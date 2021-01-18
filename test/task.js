@@ -160,8 +160,8 @@ describe("Tasks API", () => {
   });
   //@DELETE ROUTE TEST
   describe("DELETE /api/tasks/:id", () => {
-    const taskID = 1;
     it("IT should delete the TASK", (done) => {
+      const taskID = 1;
       chai
         .request(server)
         .delete(`/api/tasks/${taskID}`)
@@ -169,6 +169,23 @@ describe("Tasks API", () => {
         .end((err, response) => {
           response.should.have.status(200);
 
+          done();
+        });
+    });
+
+    it("IT should not delete the TASK", (done) => {
+      const taskID = 1;
+
+      chai
+        .request(server)
+        .delete(`/api/tasks/${taskID}`)
+
+        .end((err, response) => {
+          response.should.have.status(404);
+          assert.equal(
+            response.text,
+            "The task with the provided ID does not exist."
+          );
           done();
         });
     });
