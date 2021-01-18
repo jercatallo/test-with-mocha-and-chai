@@ -40,12 +40,9 @@ app.get("/api/tasks/:id", (request, response) => {
 
 // POST
 app.post("/api/tasks", (request, response) => {
-  const { error } = utils.validateTask(request.body);
-
-  if (error)
-    return response
-      .status(400)
-      .send("The name should be at least 3 chars long!");
+  if (!request.body.name) {
+    return response.status(400).send("The name is required");
+  }
 
   const task = {
     id: tasks.length + 1,
@@ -66,12 +63,9 @@ app.put("/api/tasks/:id", (request, response) => {
       .status(404)
       .send("The task with the provided ID does not exist.");
 
-  const { error } = utils.validateTask(request.body);
-
-  if (error)
-    return response
-      .status(400)
-      .send("The name should be at least 3 chars long!");
+  if (!request.body.name) {
+    return response.status(400).send("The name is required");
+  }
 
   task.name = request.body.name;
   task.completed = request.body.completed;
@@ -88,12 +82,9 @@ app.patch("/api/tasks/:id", (request, response) => {
       .status(404)
       .send("The task with the provided ID does not exist.");
 
-  const { error } = utils.validateTask(request.body);
-
-  if (error)
-    return response
-      .status(400)
-      .send("The name should be at least 3 chars long!");
+  if (!request.body.name) {
+    return response.status(400).send("The name is required");
+  }
 
   task.name = request.body.name;
 
@@ -117,7 +108,7 @@ app.delete("/api/tasks/:id", (request, response) => {
   response.send(task);
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 module.exports = app.listen(port, () =>
   console.log(`Listening on port ${port}...`)
 );

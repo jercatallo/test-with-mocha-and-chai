@@ -5,4 +5,4 @@ const taskSchema = {
   completed: Joi.boolean(),
 };
 
-exports.validateTask = (task) => Joi.validate(task, taskSchema);
+exports.validateTask = (task) => Joi.assert(task, taskSchema);
